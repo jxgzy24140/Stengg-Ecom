@@ -1,0 +1,10 @@
+ECom-backend/ECom.Api/appsettings.*.json
+ECom-backend/ECom.Api/appsettings.json
+ECom-backend/ECom.Application/appsettings.*.json
+ECom-backend/ECom.Application/appsettings.json
+ECom-backend/ECom.Domain/appsettings.*.json
+ECom-backend/ECom.Domain/appsettings.json
+ECom-backend/ECom.Infras/appsettings.*.json
+ECom-backend/ECom.Infras/appsettings.json
+
+Ecom-ui/node_modules

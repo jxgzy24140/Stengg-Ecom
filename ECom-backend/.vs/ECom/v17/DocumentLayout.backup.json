@@ -1,0 +1,225 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\Lab\\Learning\\STENGG - .NET - Evaluation - HaNguyenAnhKiet\\ECom-backend\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Lab\\Learning\\STENGG - .NET - Evaluation - HaNguyenAnhKiet\\ECom-backend\\ECom-backend\\EVALUATION_REPORT.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:ECom-backend\\EVALUATION_REPORT.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2C18FEC3-193F-4B74-BA16-90095FFD8CD4}|ECom.Application\\ECom.Application.csproj|d:\\lab\\learning\\stengg - .net - evaluation - hanguyenanhkiet\\ecom-backend\\ecom.application\\services\\products\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2C18FEC3-193F-4B74-BA16-90095FFD8CD4}|ECom.Application\\ECom.Application.csproj|solutionrelative:ecom.application\\services\\products\\productservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F2FC346-6C9F-4E64-AAF3-12CA1F480C3A}|ECom.Api\\ECom.Api.csproj|d:\\lab\\learning\\stengg - .net - evaluation - hanguyenanhkiet\\ecom-backend\\ecom.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1F2FC346-6C9F-4E64-AAF3-12CA1F480C3A}|ECom.Api\\ECom.Api.csproj|solutionrelative:ecom.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37065BAF-B9EB-4FDB-AA9D-739A3CA4449C}|ECom.Infras\\ECom.Infras.csproj|d:\\lab\\learning\\stengg - .net - evaluation - hanguyenanhkiet\\ecom-backend\\ecom.infras\\persistence\\idataseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37065BAF-B9EB-4FDB-AA9D-739A3CA4449C}|ECom.Infras\\ECom.Infras.csproj|solutionrelative:ecom.infras\\persistence\\idataseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{37065BAF-B9EB-4FDB-AA9D-739A3CA4449C}|ECom.Infras\\ECom.Infras.csproj|d:\\lab\\learning\\stengg - .net - evaluation - hanguyenanhkiet\\ecom-backend\\ecom.infras\\persistence\\dataseeder .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{37065BAF-B9EB-4FDB-AA9D-739A3CA4449C}|ECom.Infras\\ECom.Infras.csproj|solutionrelative:ecom.infras\\persistence\\dataseeder .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1F2FC346-6C9F-4E64-AAF3-12CA1F480C3A}|ECom.Api\\ECom.Api.csproj|d:\\lab\\learning\\stengg - .net - evaluation - hanguyenanhkiet\\ecom-backend\\ecom.api\\ecom.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{1F2FC346-6C9F-4E64-AAF3-12CA1F480C3A}|ECom.Api\\ECom.Api.csproj|solutionrelative:ecom.api\\ecom.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4F9E2BC2-B2A6-4E6D-9C72-A58B764A7EC2}|ECom.Domain\\ECom.Domain.csproj|d:\\lab\\learning\\stengg - .net - evaluation - hanguyenanhkiet\\ecom-backend\\ecom.domain\\entities\\productvariant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4F9E2BC2-B2A6-4E6D-9C72-A58B764A7EC2}|ECom.Domain\\ECom.Domain.csproj|solutionrelative:ecom.domain\\entities\\productvariant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 1282,
+          "SelectedChildIndex": 9,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{6324226f-61b6-4f28-92ee-18d4b5fe1e48}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:7:0:{e8034f19-ab72-4f06-83fd-f6832b41aa63}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{a80febb4-e7e0-4147-b476-21aaf2453969}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{004be353-6879-467c-9d1e-9ac23cdf6d49}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EVALUATION_REPORT.md",
+              "DocumentMoniker": "D:\\Lab\\Learning\\STENGG - .NET - Evaluation - HaNguyenAnhKiet\\ECom-backend\\ECom-backend\\EVALUATION_REPORT.md",
+              "RelativeDocumentMoniker": "ECom-backend\\EVALUATION_REPORT.md",
+              "ToolTip": "D:\\Lab\\Learning\\STENGG - .NET - Evaluation - HaNguyenAnhKiet\\ECom-backend\\ECom-backend\\EVALUATION_REPORT.md",
+              "RelativeToolTip": "ECom-backend\\EVALUATION_REPORT.md",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAAEkAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2026-05-14T15:16:37.757Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Lab\\Learning\\STENGG - .NET - Evaluation - HaNguyenAnhKiet\\ECom-backend\\ECom.Api\\Program.cs",
+              "RelativeDocumentMoniker": "ECom.Api\\Program.cs",
+              "ToolTip": "D:\\Lab\\Learning\\STENGG - .NET - Evaluation - HaNguyenAnhKiet\\ECom-backend\\ECom.Api\\Program.cs",
+              "RelativeToolTip": "ECom.Api\\Program.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAwwDUAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-14T15:10:20.432Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DataSeeder .cs",
+              "DocumentMoniker": "D:\\Lab\\Learning\\STENGG - .NET - Evaluation - HaNguyenAnhKiet\\ECom-backend\\ECom.Infras\\Persistence\\DataSeeder .cs",
+              "RelativeDocumentMoniker": "ECom.Infras\\Persistence\\DataSeeder .cs",
+              "ToolTip": "D:\\Lab\\Learning\\STENGG - .NET - Evaluation - HaNguyenAnhKiet\\ECom-backend\\ECom.Infras\\Persistence\\DataSeeder .cs",
+              "RelativeToolTip": "ECom.Infras\\Persistence\\DataSeeder .cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-14T15:08:34.347Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IDataSeeder.cs",
+              "DocumentMoniker": "D:\\Lab\\Learning\\STENGG - .NET - Evaluation - HaNguyenAnhKiet\\ECom-backend\\ECom.Infras\\Persistence\\IDataSeeder.cs",
+              "RelativeDocumentMoniker": "ECom.Infras\\Persistence\\IDataSeeder.cs",
+              "ToolTip": "D:\\Lab\\Learning\\STENGG - .NET - Evaluation - HaNguyenAnhKiet\\ECom-backend\\ECom.Infras\\Persistence\\IDataSeeder.cs",
+              "RelativeToolTip": "ECom.Infras\\Persistence\\IDataSeeder.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAQAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-14T15:08:22.674Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ECom.Api",
+              "DocumentMoniker": "D:\\Lab\\Learning\\STENGG - .NET - Evaluation - HaNguyenAnhKiet\\ECom-backend\\ECom.Api\\ECom.Api.csproj",
+              "RelativeDocumentMoniker": "ECom.Api\\ECom.Api.csproj",
+              "ToolTip": "D:\\Lab\\Learning\\STENGG - .NET - Evaluation - HaNguyenAnhKiet\\ECom-backend\\ECom.Api\\ECom.Api.csproj",
+              "RelativeToolTip": "ECom.Api\\ECom.Api.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-05-14T15:07:57.882Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ProductVariant.cs",
+              "DocumentMoniker": "D:\\Lab\\Learning\\STENGG - .NET - Evaluation - HaNguyenAnhKiet\\ECom-backend\\ECom.Domain\\Entities\\ProductVariant.cs",
+              "RelativeDocumentMoniker": "ECom.Domain\\Entities\\ProductVariant.cs",
+              "ToolTip": "D:\\Lab\\Learning\\STENGG - .NET - Evaluation - HaNguyenAnhKiet\\ECom-backend\\ECom.Domain\\Entities\\ProductVariant.cs",
+              "RelativeToolTip": "ECom.Domain\\Entities\\ProductVariant.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-14T14:30:40.689Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ProductService.cs",
+              "DocumentMoniker": "D:\\Lab\\Learning\\STENGG - .NET - Evaluation - HaNguyenAnhKiet\\ECom-backend\\ECom.Application\\Services\\Products\\ProductService.cs",
+              "RelativeDocumentMoniker": "ECom.Application\\Services\\Products\\ProductService.cs",
+              "ToolTip": "D:\\Lab\\Learning\\STENGG - .NET - Evaluation - HaNguyenAnhKiet\\ECom-backend\\ECom.Application\\Services\\Products\\ProductService.cs",
+              "RelativeToolTip": "ECom.Application\\Services\\Products\\ProductService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-14T14:29:56.022Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 1966,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 1581,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:133:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:134:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:135:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            }
+          ]
+        },
+        {
+          "DockedWidth": 1668,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

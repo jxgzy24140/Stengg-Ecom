@@ -1,0 +1,6 @@
+@ECom.Infras_HostAddress = http://localhost:5167
+
+GET {{ECom.Infras_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

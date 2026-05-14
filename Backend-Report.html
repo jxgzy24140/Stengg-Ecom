@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1 id="backend-project-evaluation-report">
+      Backend Project Evaluation Report
+    </h1>
+    <p>
+      This report summarizes the design, implementation and recommendations for
+      the provided .NET solution composed of <code>ECom.Api</code>,
+      <code>ECom.Application</code>, <code>ECom.Domain</code>, and
+      <code>ECom.Infras</code> projects.
+    </p>
+    <h2 id="1-approach-the-requirement">1. Approach the Requirement</h2>
+    <ul>
+      <li>
+        Understand requirements: examine controllers
+        (<code>ECom.Api\Controllers</code>), services
+        (<code>ECom.Application\Services</code>), entities
+        (<code>ECom.Domain\Entities</code>) and persistence
+        (<code>ECom.Infras\Persistence</code>).
+      </li>
+      <li>
+        Design mapping and DTOs: application layer uses DTOs and
+        <code>AutoMapper</code>
+        (<code>ECom.Application\Common\AutoMapperProfile</code>).
+      </li>
+      <li>
+        Implement repository abstraction:
+        <code>IRepository&lt;T, TPrimaryKey&gt;</code> with concrete
+        <code>Repository&lt;T, TPrimaryKey&gt;</code> in
+        <code>ECom.Infras</code>.
+      </li>
+      <li>
+        Implement service logic in <code>ProductService</code> and
+        <code>CategoryService</code> to handle business rules and validations.
+      </li>
+      <li>
+        Wire up dependencies in <code>ECom.Api\Program.cs</code> and seed
+        initial data via <code>IDataSeeder</code> / <code>DataSeeder</code>.
+      </li>
+    </ul>
+    <p>Development steps used:</p>
+    <ol>
+      <li>Reverse-engineer domain entities and relationships.</li>
+      <li>Create DTOs and mapping profiles for API boundaries.</li>
+      <li>
+        Implement repository &amp; service layers to encapsulate EF Core
+        operations.
+      </li>
+      <li>Add controllers to expose REST endpoints using DTOs.</li>
+      <li>
+        Configure <code>AppDbContext</code> and database provider in
+        <code>Program.cs</code>.
+      </li>
+      <li>
+        Add seeding and initial data in <code>AppDbContext</code> and
+        <code>DataSeeder</code>.
+      </li>
+    </ol>
+    <h2 id="2-database-design">2. Database Design</h2>
+    <ul>
+      <li>
+        Database type used: SQL (Microsoft SQL Server). Evidence:
+        <code>ECom.Api\Program.cs</code> uses
+        <code
+          >options.UseSqlServer(configuration.GetConnectionString(&quot;Default&quot;))</code
+        >
+        and <code>AppDbContext</code> models.
+      </li>
+      <li>
+        Schema highlights (from <code>ECom.Domain\Entities</code> and
+        <code>AppDbContext</code>):
+        <ul>
+          <li>
+            <code>Product</code> (one-to-many) -&gt;
+            <code>ProductVariant</code>.
+          </li>
+          <li>
+            <code>ProductVariant</code> (one-to-one) -&gt;
+            <code>ProductInventory</code>.
+          </li>
+          <li><code>Category</code> reference in <code>Product</code>.</li>
+        </ul>
+      </li>
+      <li>
+        Design rationale:
+        <ul>
+          <li>
+            Relational DB suits structured product/catalog data with strong
+            relationships and transactional needs (inventory updates,
+            variant-level pricing).
+          </li>
+          <li>
+            Explicit <code>RowVersion</code> <code>Timestamp</code> on
+            <code>Product</code> and <code>ProductVariant</code> supports
+            optimistic concurrency control for updates.
+          </li>
+          <li>
+            Separating <code>ProductInventory</code> allows tracking inventory
+            attributes without bloating product/variant tables.
+          </li>
+        </ul>
+      </li>
+      <li>
+        Support for new product features/attributes:
+        <ul>
+          <li>
+            Adding attributes: either extend <code>ProductVariant</code> with
+            new columns or add an <code>Attribute</code>/<code
+              >ProductVariantAttribute</code
+            >
+            table for flexible key-value extension.
+          </li>
+          <li>
+            Inventory policy changes (multiple warehouses) can be supported by
+            extending <code>ProductInventory</code> (e.g.,
+            <code>WarehouseId</code>) or introducing
+            <code>InventoryLocation</code> table.
+          </li>
+          <li>
+            The current relational model is well suited to strong schema changes
+            and transactional updates.
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h2 id="3-technology-stack-components">3. Technology Stack Components</h2>
+    <ul>
+      <li>Platform: .NET 9.</li>
+      <li>
+        Web: ASP.NET Core minimal API setup with controllers
+        (<code>ECom.Api\Program.cs</code>, <code>ECom.Api\Controllers</code>).
+      </li>
+      <li>
+        ORM: Entity Framework Core (via <code>AppDbContext</code>) — used
+        directly in repository.
+      </li>
+      <li>
+        Repository pattern: <code>IRepository&lt;T, TPrimaryKey&gt;</code> and
+        <code>Repository&lt;T, TPrimaryKey&gt;</code> implemented in
+        <code>ECom.Infras\Repositories</code>.
+      </li>
+      <li>
+        Mapping: <code>AutoMapper</code> with
+        <code>ECom.Application\Common\AutoMapperProfile</code>.
+      </li>
+      <li>
+        Validation: Data annotations on DTOs and entities (e.g.,
+        <code>[Required]</code>, <code>[StringLength]</code>,
+        <code>[Range]</code>). Model validation relies on ASP.NET Core model
+        binding and data annotations.
+      </li>
+      <li>
+        Concurrency: EF Core optimistic concurrency via <code>[Timestamp]</code>
+        <code>RowVersion</code> and usage of original <code>RowVersion</code> in
+        <code>Repository.UpdateAsync(entity, rowVersion)</code> to detect
+        conflicts.
+      </li>
+    </ul>
+    <h2 id="4-api-and-data-handling">4. API and Data Handling</h2>
+    <ul>
+      <li>
+        API design:
+        <ul>
+          <li>
+            Controllers expose CRUD endpoints (e.g.,
+            <code>ProductController</code>) with routes like
+            <code>api/Product/Create</code>, <code>api/Product/GetAll</code>.
+          </li>
+          <li>
+            Inputs: DTOs (<code>CreateProductDto</code>,
+            <code>UpdateProductDto</code>, <code>UpdateProductVariantDto</code>,
+            <code>PagedFilterProductDto</code>), frequently passed in body or
+            query (<code>[FromQuery]</code>).
+          </li>
+          <li>
+            Outputs: DTOs (<code>ProductOutputDto</code>,
+            <code>ProductVariantOutputDto</code>,
+            <code>PagedResultOutputDto</code>).
+          </li>
+        </ul>
+      </li>
+      <li>
+        Input processing &amp; validation:
+        <ul>
+          <li>
+            DTOs use data annotations for basic validation; ASP.NET Core model
+            binding performs validation automatically in controllers.
+          </li>
+          <li>
+            <code>ProductService</code> also performs additional validations
+            (e.g., <code>ValidateUpdateAsync</code> checking
+            <code>RowVersion</code> and existence,
+            <code>ValidateCreate</code> trims name).
+          </li>
+        </ul>
+      </li>
+      <li>
+        Data flow:
+        <ul>
+          <li>
+            Controllers call service layer (<code>IProductService</code>,
+            <code>ICategoryService</code>). Services call repository
+            (<code>IRepository</code>) which encapsulates EF Core queries.
+          </li>
+          <li>
+            Mapping to/from domain entities handled by <code>AutoMapper</code>.
+          </li>
+        </ul>
+      </li>
+      <li>
+        Error handling:
+        <ul>
+          <li>
+            Current code throws <code>Exception</code> with strings like
+            &quot;EntityNotFound&quot; or &quot;RowVersionRequired&quot;. There
+            is no centralized error middleware. Recommendation: replace raw
+            <code>Exception</code> usage with typed exceptions and a global
+            exception filter or middleware translating exceptions to proper HTTP
+            responses (404, 400, 409).
+          </li>
+        </ul>
+      </li>
+      <li>
+        Pagination/filtering:
+        <ul>
+          <li>
+            Implemented in <code>ProductService.GetAllAsync</code> with
+            <code>Skip</code>, <code>Take</code>, and filtering by
+            <code>Keyword</code> and <code>CategoryId</code>.
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h2 id="5-performance">5. Performance</h2>
+    <ul>
+      <li>
+        Caching:
+        <ul>
+          <li>
+            No caching is implemented. For read-heavy endpoints
+            (<code>GetAll</code>, <code>Get</code>), add caching layer (e.g.,
+            response caching or distributed cache like Redis) for product lists
+            and category catalogs.
+          </li>
+        </ul>
+      </li>
+      <li>
+        Concurrency:
+        <ul>
+          <li>
+            Optimistic concurrency is implemented using EF Core
+            <code>RowVersion</code> and explicit original value set in
+            <code>Repository.UpdateAsync(entity, rowVersion)</code> to detect
+            conflicts.
+          </li>
+          <li>
+            <code>ProductService.UpdateProductVariantAsync</code> enforces
+            <code>RowVersion</code> passed by client and triggers concurrency
+            exception handled by repository which throws a
+            <code>Concurrency conflict</code> exception.
+          </li>
+        </ul>
+      </li>
+      <li>
+        Query performance:
+        <ul>
+          <li>
+            Queries use <code>Include</code> to eager load navigation
+            properties. Consider projecting to DTOs in queries to select only
+            required fields for large payloads.
+          </li>
+          <li>
+            For filtering/paging, <code>Skip</code>/<code>Take</code> plus
+            <code>OrderByDescending</code> is used; for large datasets consider
+            keyset paging if appropriate.
+          </li>
+        </ul>
+      </li>
+      <li>
+        Transactions:
+        <ul>
+          <li>
+            Repository methods call <code>SaveChangesAsync</code> per operation.
+            For multi-step operations affecting multiple aggregates, consider
+            explicit transaction scope or <code>UnitOfWork</code> to group
+            saves.
+          </li>
+        </ul>
+      </li>
+    </ul>
+    <h2 id="6-observations-and-recommendations">
+      6. Observations and Recommendations
+    </h2>
+    <ul>
+      <li>
+        Strengths:
+        <ul>
+          <li>
+            Clear separation of layers (API, Application/Services, Domain,
+            Infrastructure).
+          </li>
+          <li>
+            EF Core usage with concurrency control and data annotations for
+            validation.
+          </li>
+          <li>
+            AutoMapper and DTOs keep API surface decoupled from domain entities.
+          </li>
+        </ul>
+      </li>
+      <li>
+        Areas for improvement:
+        <ul>
+          <li>
+            Error handling: replace plain <code>Exception</code> strings with
+            custom exception types and add global exception middleware to return
+            proper HTTP status codes and messages.
+          </li>
+          <li>
+            Validation: add FluentValidation for richer validation rules and
+            return problem details consistently.
+          </li>
+          <li>
+            API design: use RESTful conventions (e.g.,
+            <code>POST /products</code>, <code>PUT /products/{id}</code>,
+            <code>DELETE /products/{id}</code>) and consistent use of request
+            body vs query for complex DTOs.
+          </li>
+          <li>
+            DTO projection: for performance, project to DTOs at the query level
+            instead of retrieving full entities and mapping.
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </body>
+</html>
