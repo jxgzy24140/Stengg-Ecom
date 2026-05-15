@@ -59,14 +59,14 @@ Add `Ecom.Api/appsettings.json` and update the connection string as json like be
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=localhost;Database=StenggEcom;Trusted_Connection=True;TrustServerCertificate=True;"
+    "DefaultConnection": "Server=localhost;Database=EComDb;Trusted_Connection=True;TrustServerCertificate=True;"
   }
 }
 ```
  
 > For SQL Server authentication:
 > ```
-> Server=localhost;Database=StenggEcom;User Id=your_username;Password=your_password;TrustServerCertificate=True;
+> Server=localhost;Database=EComDb;User Id=your_username;Password=your_password;TrustServerCertificate=True;
 > ```
  
 Then restore packages and run:
