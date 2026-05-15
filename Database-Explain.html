@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Database Explain</title>
+  </head>
+  <body>
+    <h1 id="database-design-stengg-fashion-ecom">
+      Database Design — Stengg Fashion Ecom
+    </h1>
+    <h2 id="overview">Overview</h2>
+    <p>
+      The basic database for Fasion Shop is structured around four core tables.
+      All main entities inherit from a shared
+      <code>FullAuditedEntity</code> base class, which provides a consistent
+      auditing mechanism across the system.
+    </p>
+    <hr />
+    <h2 id="base-class-fullauditedentity-">
+      Base Class — <code>FullAuditedEntity</code>
+    </h2>
+    <p>
+      Before describing individual tables, it is important to understand the
+      base class that most entities inherit from.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>CreationTime</code></td>
+          <td><code>DateTime</code></td>
+          <td>
+            Timestamp when the record was created. Defaults to
+            <code>DateTime.UtcNow</code>.
+          </td>
+        </tr>
+        <tr>
+          <td><code>LastModificationTime</code></td>
+          <td><code>DateTime?</code></td>
+          <td>Timestamp of the most recent update. Null if never modified.</td>
+        </tr>
+        <tr>
+          <td><code>DeletionTime</code></td>
+          <td><code>DateTime?</code></td>
+          <td>Timestamp when the record was soft-deleted. Null if active.</td>
+        </tr>
+        <tr>
+          <td><code>IsDeleted</code></td>
+          <td><code>bool</code></td>
+          <td>
+            Soft-delete flag. Records are never physically removed; they are
+            marked as deleted instead.
+          </td>
+        </tr>
+        <tr>
+          <td><code>CreatorUserId</code></td>
+          <td><code>int?</code></td>
+          <td>ID of the user who created the record.</td>
+        </tr>
+        <tr>
+          <td><code>LastModifierUserId</code></td>
+          <td><code>int?</code></td>
+          <td>ID of the user who last modified the record.</td>
+        </tr>
+        <tr>
+          <td><code>DeleterUserId</code></td>
+          <td><code>int?</code></td>
+          <td>ID of the user who deleted the record.</td>
+        </tr>
+      </tbody>
+    </table>
+    <blockquote>
+      <p>
+        <strong>Soft Delete:</strong> Instead of permanently removing records
+        from the database, the system sets <code>IsDeleted = true</code> and
+        records the <code>DeletionTime</code>. This preserves historical data
+        and supports data recovery.
+      </p>
+    </blockquote>
+    <hr />
+    <h2 id="table-1-categories-">Table 1 — <code>Categories</code></h2>
+    <p>
+      <strong>Purpose:</strong> Stores the product categories used to organize
+      and classify products in the shop (e.g., <em>T-Shirts</em>,
+      <em>Jackets</em>, <em>Accessories</em>).
+    </p>
+    <p><strong>Inherits:</strong> <code>FullAuditedEntity</code></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Column</th>
+          <th>Type</th>
+          <th>Constraints</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>Id</code></td>
+          <td><code>int</code></td>
+          <td>Primary Key</td>
+          <td>Auto-incremented unique identifier.</td>
+        </tr>
+        <tr>
+          <td><code>Name</code></td>
+          <td><code>string</code></td>
+          <td>Required, max 512 chars</td>
+          <td>Display name of the category.</td>
+        </tr>
+        <tr>
+          <td><code>Description</code></td>
+          <td><code>string</code></td>
+          <td>Required</td>
+          <td>A text description of the category.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p><strong>Relationships:</strong></p>
+    <ul>
+      <li>
+        One <code>Category</code> → many <code>Products</code> (one-to-many)
+      </li>
+    </ul>
+    <hr />
+    <h2 id="table-2-products-">Table 2 — <code>Products</code></h2>
+    <p>
+      <strong>Purpose:</strong> Stores the core information of each product in
+      the catalog. A product represents a general item (e.g.,
+      <em>Slim Fit Chino Pants</em>) before any specific size or color is
+      defined.
+    </p>
+    <p><strong>Inherits:</strong> <code>FullAuditedEntity</code></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Column</th>
+          <th>Type</th>
+          <th>Constraints</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>Id</code></td>
+          <td><code>int</code></td>
+          <td>Primary Key</td>
+          <td>Auto-incremented unique identifier.</td>
+        </tr>
+        <tr>
+          <td><code>CategoryId</code></td>
+          <td><code>int</code></td>
+          <td>Foreign Key → <code>Categories</code></td>
+          <td>The category this product belongs to.</td>
+        </tr>
+        <tr>
+          <td><code>Name</code></td>
+          <td><code>string</code></td>
+          <td>Required, max 512 chars</td>
+          <td>Display name of the product.</td>
+        </tr>
+        <tr>
+          <td><code>Description</code></td>
+          <td><code>string?</code></td>
+          <td>Nullable</td>
+          <td>Optional product description.</td>
+        </tr>
+        <tr>
+          <td><code>RowVersion</code></td>
+          <td><code>byte[]</code></td>
+          <td>Timestamp / Concurrency Token</td>
+          <td>
+            Used for <strong>optimistic concurrency control</strong> — prevents
+            two users from overwriting each other&#39;s changes simultaneously.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p><strong>Relationships:</strong></p>
+    <ul>
+      <li>
+        Many <code>Products</code> → one <code>Category</code> (many-to-one)
+      </li>
+      <li>
+        One <code>Product</code> → many
+        <code>ProductVariants</code> (one-to-many)
+      </li>
+    </ul>
+    <hr />
+    <h2 id="table-3-productvariants-">
+      Table 3 — <code>ProductVariants</code>
+    </h2>
+    <p>
+      <strong>Purpose:</strong> Represents a specific, purchasable version of a
+      product — defined by a unique combination of <strong>size</strong>,
+      <strong>color</strong>, and <strong>price</strong>. For example, the
+      product <em>Slim Fit Chino Pants</em> may have variants such as
+      <em>(M, Black, $29.99)</em> and <em>(L, Beige, $29.99)</em>.
+    </p>
+    <p><strong>Inherits:</strong> <code>FullAuditedEntity</code></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Column</th>
+          <th>Type</th>
+          <th>Constraints</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>Id</code></td>
+          <td><code>int</code></td>
+          <td>Primary Key</td>
+          <td>Auto-incremented unique identifier.</td>
+        </tr>
+        <tr>
+          <td><code>ProductId</code></td>
+          <td><code>int</code></td>
+          <td>Foreign Key → <code>Products</code></td>
+          <td>The parent product this variant belongs to.</td>
+        </tr>
+        <tr>
+          <td><code>Size</code></td>
+          <td><code>string</code></td>
+          <td>Max 32 chars</td>
+          <td>The size of this variant (e.g., S, M, L, XL).</td>
+        </tr>
+        <tr>
+          <td><code>Color</code></td>
+          <td><code>string</code></td>
+          <td>Max 32 chars</td>
+          <td>The color of this variant (e.g., Black, White).</td>
+        </tr>
+        <tr>
+          <td><code>Price</code></td>
+          <td><code>decimal(18,2)</code></td>
+          <td>—</td>
+          <td>The selling price of this variant.</td>
+        </tr>
+        <tr>
+          <td><code>IsSell</code></td>
+          <td><code>bool</code></td>
+          <td>Default: <code>false</code></td>
+          <td>Indicates whether this variant is currently listed for sale.</td>
+        </tr>
+        <tr>
+          <td><code>RowVersion</code></td>
+          <td><code>byte[]</code></td>
+          <td>Timestamp / Concurrency Token</td>
+          <td>Optimistic concurrency control, same as <code>Product</code>.</td>
+        </tr>
+      </tbody>
+    </table>
+    <p><strong>Relationships:</strong></p>
+    <ul>
+      <li>
+        Many <code>ProductVariants</code> → one
+        <code>Product</code> (many-to-one)
+      </li>
+      <li>
+        One <code>ProductVariant</code> → one
+        <code>ProductInventory</code> (one-to-one)
+      </li>
+    </ul>
+    <hr />
+    <h2 id="table-4-productinventories-">
+      Table 4 — <code>ProductInventories</code>
+    </h2>
+    <p>
+      <strong>Purpose:</strong> Tracks the stock levels for each
+      <code>ProductVariant</code>. It is intentionally separated from
+      <code>ProductVariants</code> to keep inventory concerns (stock management)
+      decoupled from product description concerns (size, color, price). This
+      separation makes it easier to scale up and multi-warehouse by the way
+      change 1-n relationship between <code>ProductVariants</code> -
+      <code>ProductInventories</code>. To make it more simplier you can remove
+      this table and put quantity fields into <code>ProductVariant</code>.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Column</th>
+          <th>Type</th>
+          <th>Constraints</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>Id</code></td>
+          <td><code>int</code></td>
+          <td>Primary Key</td>
+          <td>Auto-incremented unique identifier.</td>
+        </tr>
+        <tr>
+          <td><code>ProductVariantId</code></td>
+          <td><code>int</code></td>
+          <td>Foreign Key → <code>ProductVariants</code></td>
+          <td>The variant this inventory record belongs to.</td>
+        </tr>
+        <tr>
+          <td><code>StockQuantity</code></td>
+          <td><code>int</code></td>
+          <td>—</td>
+          <td>The total quantity ever received into stock for this variant.</td>
+        </tr>
+        <tr>
+          <td><code>RemainingQuantity</code></td>
+          <td><code>int</code></td>
+          <td>—</td>
+          <td>The current quantity still available for purchase.</td>
+        </tr>
+        <tr>
+          <td><code>IsDeleted</code></td>
+          <td><code>bool</code></td>
+          <td>Default: <code>false</code></td>
+          <td>
+            Soft-delete flag (note: does not inherit
+            <code>FullAuditedEntity</code>).
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <blockquote>
+      <p>
+        <strong
+          ><code>StockQuantity</code> vs <code>RemainingQuantity</code>:</strong
+        >
+        <code>StockQuantity</code> records how much was originally stocked,
+        while <code>RemainingQuantity</code> decreases as orders are placed. The
+        difference between the two reflects how many units have been sold or
+        reserved.
+      </p>
+    </blockquote>
+    <p><strong>Relationships:</strong></p>
+    <ul>
+      <li>
+        One <code>ProductInventory</code> → one
+        <code>ProductVariant</code> (one-to-one)
+      </li>
+    </ul>
+    <hr />
+    <h2 id="entity-relationship-summary">Entity Relationship Summary</h2>
+    <pre><code>Categories
+    │
+    │ <span class="hljs-number">1</span>
+    │
+    ▼ N
+Products  ──────────────────────────────────────────────────────────────
+    │                                                                    │
+    │ <span class="hljs-number">1</span>                                                            RowVersion
+    │                                                        (optimistic concurrency)
+    ▼ N
+ProductVariants ────────────────────────────────────────────────────────
+    │                                                                    │
+    │ <span class="hljs-number">1</span>                                                            RowVersion
+    │                                                        (optimistic concurrency)
+    ▼ <span class="hljs-number">1</span>
+ProductInventories
+</code></pre>
+    <table>
+      <thead>
+        <tr>
+          <th>Relationship</th>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>Category</code> → <code>Product</code></td>
+          <td>One-to-Many</td>
+          <td>A category groups many products.</td>
+        </tr>
+        <tr>
+          <td><code>Product</code> → <code>ProductVariant</code></td>
+          <td>One-to-Many</td>
+          <td>A product has many size/color variants.</td>
+        </tr>
+        <tr>
+          <td><code>ProductVariant</code> → <code>ProductInventory</code></td>
+          <td>One-to-One</td>
+          <td>Each variant has exactly one inventory record.</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>
